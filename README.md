@@ -6,7 +6,7 @@ A small Django REST API I built to practice role-based access control (RBAC) wit
 
 - **Admin** can create users, assign roles, and see/manage everything in the system.
 - **Manager** manages their own team (a User is linked to a Manager through a `manager` field), but can't create new accounts.
-- **User** can only see and edit their own profile and their own tasks.
+- **User** can only see and edit their own tasks, and see their own entry via `/api/users/`.
 
 Login is handled with JWT (access + refresh tokens), so once you log in you just attach the token to every request instead of sending a username/password each time.
 
@@ -70,7 +70,6 @@ Server runs at `http://127.0.0.1:8000/`. Swagger docs live at `http://127.0.0.1:
 | `/api/token/refresh/` | POST | anyone with a refresh token | `{"refresh"}` |
 | `/api/register/` | POST | Admin only | `{"username", "email", "password", "role", "manager"}` |
 | `/api/users/` | GET | Admin (all), Manager (team), User (self) | - |
-| `/api/me/` | GET/PUT | self | `{"username", "email", "role", "manager"}` |
 | `/api/tasks/` | GET | all, filtered by role | - |
 | `/api/tasks/` | POST | Manager, User, Admin | `{"title", "description", "done"}` |
 | `/api/tasks/{id}/` | PUT | owner, owner's manager, or Admin | `{"title", "description", "done"}` |
