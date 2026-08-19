@@ -13,7 +13,8 @@ class TaskViewSet(viewsets.ModelViewSet):
         if user.role == "ADMIN":
             return Task.objects.all()
         if user.role == "MANAGER":
-            # their own tasks plus anything owned by people on their team
+            # union of their own tasks + their team's tasks - without the
+            # second filter a manager wouldn't see tasks they made themselves
             return Task.objects.filter(owner__manager=user) | Task.objects.filter(owner=user)
         return Task.objects.filter(owner=user)
 

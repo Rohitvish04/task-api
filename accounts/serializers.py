@@ -19,7 +19,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         role = data.get("role", "USER")
         manager = data.get("manager")
 
-        # a normal user has to belong to a team, managers/admins don't
+        # keeping this check here instead of the model - it's a business
+        # rule (only Users have a manager), not a database constraint
         if role == "USER" and not manager:
             raise serializers.ValidationError("manager is required when role is USER")
         if role != "USER" and manager:

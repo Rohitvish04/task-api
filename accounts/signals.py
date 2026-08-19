@@ -3,8 +3,9 @@ from django.dispatch import receiver
 from .models import User
 
 
-# bonus requirement - default every new account to USER unless a role
-# was explicitly set during registration
+# adding this as a safety net - even if someone creates a User outside
+# the serializer (shell, admin panel, whatever), they shouldn't end up
+# with a blank role
 @receiver(pre_save, sender=User)
 def set_default_role(sender, instance, **kwargs):
     if not instance.role:
