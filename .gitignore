@@ -4,3 +4,4 @@ db.sqlite3
 venv/
 .env
 INTERVIEW_PREP.md
+HOW_TO_TEST.md

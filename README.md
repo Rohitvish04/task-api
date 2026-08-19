@@ -82,7 +82,14 @@ Server runs at `http://127.0.0.1:8000/`. Swagger docs live at `http://127.0.0.1:
 
 Easiest way is the Swagger UI (`/swagger/`) — log in through `POST /api/token/`, copy the `access` token, click **Authorize**, paste `Bearer <token>`, and every endpoint becomes testable from the browser.
 
-For a full manual walkthrough (setting up a sample Admin/Manager/User team and checking each permission rule), see `HOW_TO_TEST.md`.
+To test the role filtering properly, set up a sample team first:
+
+1. Log in as Admin, `POST /api/register/` a Manager (no `manager` field).
+2. `POST /api/register/` a User with `role: "USER"` and `manager: <manager_id>`.
+3. Log in as that Manager → `GET /api/users/` returns only that one User.
+4. Log in as the User → `GET /api/users/` and `GET /api/tasks/` return only their own stuff.
+
+Run the same request (e.g. `GET /api/users/`, `GET /api/tasks/`) with each role's token and watch the response change — that's the RBAC rules proving themselves.
 
 ## Still on my list
 
