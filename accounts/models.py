@@ -11,8 +11,7 @@ ROLE_CHOICES = (
 class User(AbstractUser):
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default="USER")
 
-    # didn't want a separate Team table for this - a User just points at
-    # whoever their Manager is. only makes sense when role=USER
+  
     manager = models.ForeignKey(
         "self", null=True, blank=True, on_delete=models.SET_NULL, related_name="team"
     )
